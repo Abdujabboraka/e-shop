@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Sponsor Section with Yellow Theme -->
+<style>
+
+    .container-xm {
+        margin: 50px auto;
+        padding: 40px;
+        background-color: #ffeb3b; /* Yellow theme */
+        border-radius: 12px;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        max-width: 100%;
+    }
+    h1 {
+        text-align: center;
+        color: #ff9800;
+        font-size: 42px;
+        margin-bottom: 40px;
+    }
+    .card-text {
+        font-size: 18px;
+        color: #333;
+        line-height: 1.7;
+    }
+    h3 {
+        color: #333;
+        margin-top: 25px;
+        font-weight: bold;
+        font-size: 26px;
+    }
+    h2 {
+        color: #ff9800;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        font-size: 28px;
+    }
+    p {
+        text-align: justify;
+        font-size: 20px;
+    }
+    /* Order Button Styling */
+    .zakaz {
+        text-align: center;
+        margin-top: 30px;
+    }
+    .order-button {
+        display: inline-block;
+        padding: 12px 25px;
+        background-color: black;
+        color: #ffeb3b;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    .order-button:hover {
+        background-color: rgb(40, 40, 40);
+        text-decoration: none;
+        color: #ffeb3b;
+        font-size: 15px;
+    }
+    .order-button:active {
+    font-size: 15px;
+    }
+    /* Media query for smaller screens */
+    @media (max-width: 768px) {
+        .container {
+            padding: 20px;
+        }
+        h1 {
+            font-size: 36px;
+        }
+        h3, h2 {
+            font-size: 22px;
+        }
+        p, .card-text {
+            font-size: 18px;
+        }
+        .order-button {
+            font-size: 16px;
+            padding: 10px 20px;
+        }
+    }
+</style>
+
+<div class="zakaz">
+    <a href="tel:+998975016236" class="order-button">📞 Buyurtma berish</a>
+</div>
+
+<div class="carousell-inter">
+
+</div>
+
+<div class="container-xm">
+    <h1>Chimyon Milliy Patirlari</h1>
+
+     <div class="card-text">
+
+        <h1>Chimyon Patir</h1>
+        <p>Chimyon patiri O‘zbekistonning shimoliy hududlaridan, xususan Chimyon tog‘lari atrofi va Toshkent
+            viloyatidagi Chimyon qishlog‘i bilan bog‘liq bo‘lib, o‘ziga xos qadimiy non pishirish an’analaridan biridir.
+            Ushbu patir asosan tandirda pishiriladi, bu esa qadimgi Markaziy Osiyo xalqlarida keng tarqalgan non
+            tayyorlash usullaridan biri hisoblanadi. Chimyon patiri, o‘zining yumshoq, lekin biroz qattiqroq tuzilishi
+            bilan ajralib turadi va yuzasi maxsus naqshlar bilan bezatiladi, bu esa uni estetik jihatdan ham chiroyli
+            qiladi. Ushbu non tog‘li hududlarda yashovchi aholining asosiy oziq-ovqat manbalaridan biri bo‘lgan bo‘lib,
+            u nafaqat to‘yimli va uzoq muddat saqlanishi bilan mashhur, balki xalq marosimlari, bayramlar va to‘ylarda
+            alohida o‘rin egallagan. Patirning tarixiy kelib chiqishi va ijtimoiy ahamiyati o‘zbek xalqining nonni
+            farovonlik va baraka ramzi sifatida qadrlashi bilan bog‘liq. O‘zbek xalq ertaklari va afsonalarida non,
+            jumladan Chimyon patiri, tinchlik va baraka ramzi sifatida tasvirlangan. Islom dinida ham nonni hurmat
+            qilish muhim ahamiyat kasb etib, nonni isrof qilmaslik va uni e’zozlash O‘zbekistonda qadimdan saqlanib
+            kelayotgan urf-odatlar sirasiga kiradi. Chimyon patirining mazasi, an’anaviy pishirish usuli va tarixiy
+            ildizlari O‘zbekistonda non pishirish madaniyatining ajralmas qismi bo‘lib, bu non bugungi kunda ham to‘kin
+            dasturxonlarning muhim taomi hisoblanadi.</p>
+
+
+        <h3>Chimyon Patir Qadimiy patir pishirish an'analari</h3>
+        <p> Chimyon patiriga oid qadimiy ma'lumotlar va an'analar O'zbekistonning milliy non pishirish madaniyatiga
+            bog'liq bo'lib, Chimyon tog‘lari va uning atrofi bilan uzviy aloqador. Biroq, Chimyon patiri haqida qadimiy
+            yozma manbalar ko‘p uchramaydi, chunki bunday nonlar asosan xalq og‘zaki an’analari orqali avloddan-avlodga
+            o‘tib kelgan. Ammo, bu nonni tayyorlash usullari, tandirdan foydalanish va patirning tarixi qadimiy o‘zbek
+            nonchiligi bilan bog‘liqdir.</p>
+        <h3>Tandirning kelib chiqishi va ahamiyati:</h3>
+        <p>Tandirda non pishirish qadimgi Markaziy Osiyo va O'rta Sharqdagi xalqlar orasida keng tarqalgan an'ana
+            hisoblanadi. Chimyon patirining ham tandirda pishirilishi uning uzoq yillik tarixiy ildizlari haqida
+            ma'lumot beradi. Tandirlar Oʻzbekistonning deyarli har bir hududida ishlatilgan bo‘lib, Chimyon
+            qishloqlarida bu an’ana qadimdan saqlanib qolgan. Ushbu non pishirish usuli odamlarni tabiat bilan
+            bog'laydi, chunki tandir yog'och yoki ko'mir yordamida isitiladi va tosh yoki loydan qurilgan bo‘ladi.</p>
+        <h3>Patirning O‘zbek xalqi turmush tarzidagi o‘rni:</h3>
+        <p>Chimyon patiri tog‘li hududlarda yashovchi aholining asosiy oziq-ovqat manbalaridan biri bo‘lgan. Patirning
+            to‘yimli va uzoq muddat saqlanishi tufayli qadimgi davrlarda ko‘chmanchi va dehqonchilik bilan shug‘ullangan
+            xalqlar orasida keng tarqalgan. Patir pishirilgan non, asosan, chorvachilik va dehqonchilik bilan
+            shug‘ullanuvchi oilalarda dasturxonning ajralmas qismi hisoblangan.</p>
+         <div class="zakaz">
+    <a href="tel:+998975016236" class="order-button">📞 Buyurtma berish</a>
+</div>
+        <h3>Chimyon tog‘laridagi patir va xalqona an’analar:</h3>
+        <p>Chimyon tog‘lari va uning atrofidagi hududlarda patir tayyorlash an’analari qadimdan saqlangan. Ushbu hududda
+            patir nafaqat oziq-ovqat, balki marosimlar, bayramlar, to‘ylarda ham alohida o‘rin egallagan. O‘zbek xalq
+            og‘zaki ijodida non – bu farovonlik va to‘kinlik ramzi sifatida qadrlangan. Patirning maxsus naqshlar bilan
+            bezatilishi esa, unga qadimiy an’analarning bir qismi sifatida estetik va marosimiy ahamiyat bergan.</p>
+        <h3>Patir va xalq ertaklari:</h3>
+        <p>O‘zbek xalq ertaklari va afsonalarida non pishirish, ayniqsa, patir kabi mahsulotlarga alohida hurmat bilan
+            qaralgan. Xalq orasida patirning nafaqat to‘yimli taom, balki tinchlik va baraka ramzi bo‘lishi haqida
+            rivoyatlar mavjud. Chimyon tog‘lari hududida ham non va patir pishirish bilan bog‘liq qadimiy urf-odatlar
+            mavjud bo‘lib, ularning ko‘plari hozirga qadar saqlanib qolgan.</p>
+        <h2>Islomiy ta'sir va nonning hurmati:</h2>
+
+        <p>Qadimgi vaqtlardan beri islom dinida nonni hurmat qilish muhim ahamiyatga ega bo‘lgan. Chimyon patiri singari
+            nonlar ham islomiy odatlar va axloqiy ta’limotlarga ko‘ra, muqaddas hisoblangan. Nonni isrof qilmaslik, uni
+            e’zozlash va hurmat qilish O‘zbekistonda keng tarqalgan qadimiy urf-odatlar sirasiga kiradi. Chimyon patiri
+            ham shu hurmat bilan tayyorlanib, dasturxonga tortiladi.</p>
+        <p>Chimyon patiri va uni tayyorlash qadimgi O'zbekiston xalqining non pishirish madaniyati va ijtimoiy
+            hayotining ajralmas qismi bo‘lgan. Bu patirning tarixiy ildizlari O‘zbekiston tog‘li hududlarida yashovchi
+            xalqlar orasida chuqur an’analarga asoslangan bo‘lib, tandirda pishirilishi, uning to‘yimliligi va estetik
+            ko‘rinishi xalqning uzoq davom etgan madaniy merosidan dalolat beradi. Qadimdan non — ayniqsa, Chimyon
+            patiri — O‘zbek xalqi uchun muqaddas oziq-ovqat hisoblanib, u mazmunli tarix va ma'naviy ahamiyatga ega.</p>
+                 <div class="zakaz">
+    <a href="tel:+998975016236" class="order-button">📞 Buyurtma berish</a>
+</div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endblock content %}

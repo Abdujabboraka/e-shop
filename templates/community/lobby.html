@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Lobby</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e8f5e9; /* Light green background */
+            color: #2e7d32; /* Dark green for text */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-bottom: 120px; /* Space for sticky form */
+        }
+
+        h1 {
+            text-align: center;
+            color: #1b5e20; /* Deeper green for title */
+            margin-top: 20px;
+        }
+
+        p {
+            text-align: center;
+            color: #388e3c; /* Medium green for paragraph text */
+            font-size: 1.1em;
+        }
+
+        .opinion-box {
+            background-color: #ffffff;
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #c8e6c9;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .opinion-box h2 {
+            margin: 2px;
+            padding: 2px;
+            border-radius: 5px;
+            color: #2e7d32;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+        }
+        .profile-photo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid #1b5e20;
+    margin-bottom: 15px;
+}
+
+        .opinion-box p {
+            background-color: #e8f5e9;
+            margin: 5px 0;
+            color: #1b5e20; /* Brighter green */
+            border-radius: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .opinion-box .date {
+            font-size: 0.9em;
+            color: #a5d6a7;
+        }
+
+        .sticky-form {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 90%;
+            border-radius: 50px;
+            background-color: #1b5e20; /* Deep green for form */
+            padding: 10px 20px;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .sticky-form form {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .image-name {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        }
+        .image-name h2 {
+        margin-top: -15px;}
+        .sticky-form input[type="text"], .sticky-form textarea {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #a5d6a7;
+            border-radius: 25px;
+            font-size: 1em;
+            outline: none;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .sticky-form input[type="text"]:focus, .sticky-form textarea:focus {
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+
+        .sticky-form button {
+            background-color: #4caf50; /* Brighter green */
+            color: white;
+            font-weight: bold;
+            padding: 10px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .sticky-form button:hover {
+            background-color: #388e3c; /* Darker green on hover */
+        }
+
+        .sticky-form button svg {
+            fill: white;
+            width: 20px;
+            height: 20px;
+        }
+
+    .reply-link {
+        text-decoration: none; /* Remove underline */
+        display: inline-block;
+        background-color: #a5d6a7; /* Light green background */
+        color: #1b5e20; /* Dark green text */
+        font-family: Arial, sans-serif;
+        font-size: 1.2em;
+        font-weight: bold;
+        padding: 10px 20px;
+        border: 2px solid #81c784; /* Slightly darker green border */
+        border-radius: 8px; /* Rounded corners */
+        transition: all 0.3s ease; /* Smooth hover effect */
+        text-align: center;
+    }
+
+    .reply-link:hover {
+        background-color: #81c784; /* Medium green background on hover */
+        color: white; /* White text on hover */
+        border-color: #4caf50; /* Brighter green border */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+        transform: scale(1.05); /* Slightly enlarge on hover */
+    }
+
+    .reply-link h3 {
+        margin: 0; /* Remove margin around the text */
+    }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Chimyon E'lonlarga xush kelibsiz!</h1>
+    <p>Bu Chimyon E'lonlar veb-sahifasining jamoa bo'limi. Bu yerda siz va boshqa foydalanuvchilar fikr va
+        takliflaringizni bildirish imkoniyatiga ega bo'lasiz. Iltimos, fikr almashishda hamjamiyat qoidalariga amal
+        qiling</p>
+    <!-- Display all opinions -->
+    {% for i in opinions %}
+    <div class="opinion-box">
+        <div class="image-name">
+            {% if i.user.profile.photo %}
+            <img class="profile-photo" src="{{ i.user.profile.photo.url }}" alt="{{ i.user.username }} rasm">
+            {% else %}
+            <img class="profile-photo" src="{% static 'profile/user.png' %}" alt="Standart foydalanuvchi rasmi">
+            {% endif %}
+            {% if i.user.first_name %}
+            <h2>{{ i.user.first_name }}</h2>
+            {% else %}
+            <h2>{{ i.user.username }}</h2>
+            {% endif %}
+        </div>
+        <p>{{ i.opinion }}</p>
+        <h3 class="date">{{ i.created_at|date:"d-F, Y" }}</h3>
+        <a class="reply-link" href="{% url 'user_profile' user.username %}" ><h3>Javob Yozish</h3></a>
+    </div>
+
+    {% endfor %}
+</div>
+
+<!-- Sticky Form at the Bottom -->
+<div class="sticky-form">
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="opinion" placeholder="Fikringizni yozing..." required>
+        <button type="submit">
+            <!-- Paper Airplane SVG Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M2 21l21-9-21-9v7l15 2-15 2v7z"/>
+            </svg>
+        </button>
+    </form>
+</div>
+</body>
+</html>

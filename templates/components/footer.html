@@ -1,0 +1,143 @@
+{% load static %}
+<style>footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+
+    transition: bottom 0.3s ease; /* Smooth transition */
+}
+
+.bottom-nav ul {
+    border-radius: 20px 20px 0 0;
+    list-style: none;
+    padding: 5px;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+    background-color: #0044cc;; /* Example background color */
+}
+
+.bottom-nav li {
+    display: inline-block;
+}
+
+.bottom-nav a {
+    text-decoration: none;
+    color: white; /* Example text color */
+}
+
+.logo-png {
+    width: 40px;  /* Example size */
+    height: 40px;
+}
+</style>
+
+
+
+<style>
+
+    /* Basic styling for the user count display */
+.user-count {
+  font-family: 'Roboto', sans-serif;
+  padding: 15px;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  text-align: right;
+  margin: 20px;
+}
+
+/* Label and number styling */
+.user-count h6 {
+  margin: 0;
+  color: green;
+}
+
+.user-count {
+  color: #777;
+  font-size: 1rem;
+  margin-right: 10px;
+}
+.label {
+color: green;
+font-weight: bold;}
+
+.user-count .number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #388E3C;
+}
+
+</style>
+<div class="user-count">
+  <h6>
+    <span class="label">Online  ⦿ <img class="logo-png"  src="{% static 'profile/e-user.png' %}"></span>
+    <span class="number" id="userCount">Loading...</span>
+  </h6>
+</div>
+
+<script>
+
+function generateRandomUserCount() {
+  const min = 25;  // Min value
+  const max = 106;  // Max value
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Function to update the user count
+function updateUserCount() {
+  // Generate a new random user count between 250 and 897
+  const userCount = generateRandomUserCount();
+
+  // Display the new user count
+  document.getElementById("userCount").textContent = userCount.toLocaleString();
+}
+
+// Update the user count every 2 seconds
+setInterval(updateUserCount, 5000);
+
+// Initial update with a random value
+updateUserCount();
+
+</script>
+
+
+<footer>
+       <nav class="bottom-nav">
+        <ul>
+            <li><a href="{% url 'announcement_list' %}"><img class="logo-png" src="{% static 'navigations/home.png'%}"></a></li>
+            <li><a href="{% url 'search' %}"><img class="logo-png" src="{% static 'navigations/search.png'%}"></a></li>
+            <li><a href="{% url 'create_announcement' %}"><img class="logo-png"src="{% static 'navigations/add.png'%}"></a></li>
+
+
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'earning' %}"><img class="logo-png" src="{% static 'navigations/earning.png'%}"></a></li>
+                <li><a href="{% url 'my_profile' %}"><img class="logo-png" src="{% static 'profile/user.png'%}"></a></li>
+
+            {% else %}
+                <li><a href="{% url 'login' %}"><img class="logo-png" src="{% static 'profile/user.png'%}"></a></li>
+            {% endif %}
+
+
+        </ul>
+    </nav>
+</footer>
+<script>
+  let lastScrollTop = 0;
+  const footer = document.querySelector('footer');
+
+  window.addEventListener('scroll', function () {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollTop > lastScrollTop) {
+      // Scrolling down, hide the footer
+      footer.style.bottom = '-100px';  // Moves footer out of view
+    } else {
+      // Scrolling up, show the footer
+      footer.style.bottom = '0';
+    }
+
+    lastScrollTop = scrollTop;
+  });
+</script>

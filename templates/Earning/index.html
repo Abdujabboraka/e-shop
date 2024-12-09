@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<style>
+    .sticky-bar {
+        position: sticky; /* Make it sticky */
+        top: 0; /* Position it at the top */
+        background-color: rgb(41, 43, 42);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        display: flex; /* Use flexbox for layout */
+        justify-content: space-between; /* Space out children */
+        align-items: center; /* Center vertically */
+        padding: 10px 20px; /* Padding for spacing */
+        z-index: 1000; /* Ensure it's on top */
+    }
+
+    .profile-info {
+        display: flex; /* Flexbox for profile info */
+        align-items: center; /* Center vertically */
+    }
+
+    .profile-photo {
+        width: 50px; /* Set a fixed size for the profile photo */
+        height: 50px; /* Maintain aspect ratio */
+        border-radius: 50%; /* Circular image */
+        margin-right: 10px; /* Spacing between image and name */
+        object-fit: cover;
+    }
+
+    .profile-name {
+        font-size: 1.2em; /* Larger font size for name */
+        color: rgb(255, 125, 3);
+    }
+
+    .balance-info {
+        display: flex; /* Flexbox for balance info */
+        align-items: center; /* Center vertically */
+        font-size: 1.1em; /* Font size for balance */
+        color: rgb(255, 125, 3);
+    }
+
+    .balance {
+        margin-right: 5px; /* Spacing between balance and coin */
+    }
+
+    .coin-icon {
+        width: 35px; /* Set a fixed size for the coin icon */
+        height: 35px; /* Maintain aspect ratio */
+    }
+
+</style>
+<div class="sticky-bar">
+    <div class="profile-info">
+        {% if profile.photo %}
+        <img src="{{ profile.photo.url }}" alt="{{ user.username }}" class="profile-photo">
+
+        {% else %}
+        <img src="{% static 'profile/user.png' %}" alt="Default Profile" class="profile-photo">
+        {% endif %}
+        {% if user.first_name %}
+        <h2 class="profile-name">{{ user.first_name }}</h2>
+        {% else %}
+        <h2 class="profile-name">{{ user.username }}</h2>
+        {% endif %}
+    </div>
+    <div class="balance-info">
+        <a href="{% url 'payment' %}"><img src="{% static 'navigations/plus.png' %}" alt="Plus" class="coin-icon"></a>
+        <span class="balance">{{ profile.balance }}</span>
+        <img src="{% static 'profile/coin.png' %}" alt="Coin" class="coin-icon">
+    </div>
+</div>
+
+
+<style>
+    .coin-icon { width: 35px; height: 35px; margin-right: 8px; }
+    .tasks-box {
+        max-width: 600px; margin: 20px auto; padding: 20px;
+        background-color: rgb(48, 48, 48); border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); transition: box-shadow 0.3s;
+    }
+    .tasks-box:hover { box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2); }
+    .task-item { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #e0e0e0; transition: background-color 0.3s; }
+    .task-item:last-child { border-bottom: none; }
+    p { margin: 0; font-size: 18px; color: rgb(255, 100, 28); flex-grow: 1; }
+    .task-button {
+        padding: 10px 20px; background-color: #28a745; color: white;
+        border: none; border-radius: 5px; cursor: pointer;
+        font-weight: bold; transition: background-color 0.3s, transform 0.2s;
+    }
+    .task-button:hover { background-color: #218838; transform: translateY(-2px); color: white; }
+    .task-button:active { background-color: #1e7e34; transform: translateY(0); }
+</style>
+
+<div class="tasks-box">
+    {% if user_bonus %}
+    <form method="POST" class="task-item">
+        {% csrf_token %}
+        <div style="display: flex; align-items: center;">
+            <img src="{% static 'profile/coin.png' %}" alt="Coin" class="coin-icon">
+            <p>+600 cp </p>
+        </div>
+        <p>Birinchi Bonusalrni Olish</p>
+        <img class="coin-icon" src="{% static 'contacts/plus.png' %}">
+        <input type="hidden" name="reward" value="600">
+        <button type="submit" class="task-button">Olish</button>
+    </form>
+    {% else %}
+    <div class="task-item">
+        <div style="display: flex; align-items: center;">
+            <img src="{% static 'profile/coin.png' %}" alt="Coin" class="coin-icon">
+        </div>
+        <p>+600 cp Bir necha Kunda Yana oling</p>
+        <img class="coin-icon" src="{% static 'navigations/checked.png' %}">
+        <button class="task-button" disabled>Olindi</button>
+    </div>
+    {% endif %}
+
+    <form method="POST" class="task-item">
+        <div style="display: flex; align-items: center;">
+            <img src="{% static 'profile/coin.png' %}" alt="Coin" class="coin-icon">
+            <p>+300 cp </p>
+        </div>
+        <p>Do'stlarni Taklif Qilish</p>
+        <a href="#" class="task-button">Olish</a>
+    </form>
+
+    <form method="POST" class="task-item">
+        <div style="display: flex; align-items: center;">
+            <img src="{% static 'profile/coin.png' %}" alt="Coin" class="coin-icon">
+            <p>+ cp </p>
+        </div>
+        <p>Sotib Olish</p>
+        <img class="coin-icon" src="{% static 'reaction/payments.png' %}">
+        <a href="{% url 'payment' %}" class="task-button">Sotib Olish</a>
+    </form>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<script>
+    function claimReward(points) {
+        if (points > 0) {
+            alert(`You have claimed ${points} cp!`);
+        } else {
+            alert("No points for this action.");
+        }
+    }
+</script>
+{% endblock content %}

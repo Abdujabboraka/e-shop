@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yordam</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(120deg, #FF7F50, #FF4500);
+            color: #333;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        /* Header Section Styling */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .header img {
+            width: 300px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .header .title {
+            flex: 1;
+            margin-left: 20px;
+        }
+
+        .header .title h1 {
+            font-size: 2.5em;
+            color: #FF4500;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .header .title p {
+            font-size: 1.2em;
+            color: #666;
+        }
+
+        /* Container Styling */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Individual Item Styling */
+        .item {
+            border-bottom: 2px solid #FF7F50;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* User Name Styling */
+        .user {
+            font-size: 2em;
+            color: #FF4500;
+            font-weight: bold;
+        }
+
+        /* Subject Styling */
+        .subject {
+            font-size: 1.5em;
+            color: #FF6347;
+            margin-bottom: 10px;
+        }
+
+        /* Content Styling */
+        .content {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        /* Date Styling */
+        .date {
+            display: block;
+            font-size: 0.9em;
+            color: #999;
+            margin-bottom: 15px;
+        }
+
+        /* Photo Styling */
+        .photo {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 10px;
+        }
+
+        /* No Photo Styling */
+        .no-photo {
+            color: #FF4500;
+            font-style: italic;
+        }
+
+        /* Additional Styling for Grand Effect */
+        .item:last-child {
+            border-bottom: none;
+        }
+
+        h1, h2 {
+            text-transform: capitalize;
+            letter-spacing: 1px;
+        }
+
+        img {
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .user {
+                font-size: 1.8em;
+            }
+
+            .subject {
+                font-size: 1.3em;
+            }
+
+            .content {
+                font-size: 1em;
+            }
+
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header img {
+                margin-bottom: 15px;
+            }
+
+            .header .title {
+                margin-left: 0;
+            }
+        }
+    </style>
+    <style>
+/* Form Styling */
+form {
+    max-width: 600px;
+    margin: 30px auto;
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Field Styling */
+form input[type="text"],
+form textarea,
+form input[type="file"] {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    color: #333;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Textarea Specific Styling */
+form textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* File Input Styling */
+form input[type="file"] {
+    padding: 5px;
+    cursor: pointer;
+}
+
+/* Button Styling */
+form .btn {
+    display: inline-block;
+    background: #FF7F50;
+    color: #fff;
+    font-size: 1em;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+form .btn:hover {
+    background: #FF4500;
+}
+
+/* Focus Effect for Fields */
+form input[type="text"]:focus,
+form textarea:focus,
+form input[type="file"]:focus {
+    border-color: #FF7F50;
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 127, 80, 0.5);
+}
+</style>
+</head>
+<body>
+<!-- Header Section with Operator Photo -->
+<div class="header">
+    <img src="{% static 'community/operator.jpg' %}" alt="Operator Photo">
+    <div class="title">
+        <h1>Operator Yordami</h1>
+        <p>Muammolarni hal qilishdagi ishonchli hamkoringiz</p>
+
+    </div>
+</div>
+
+<!-- Content Section -->
+<div class="container">
+    {% for item in supports %}
+    <div class="item">
+        <h1 class="user">{{ item.user }}</h1>
+        <h2 class="subject">{{ item.subject }}</h2>
+        <p class="content">{{ item.content }}</p>
+        <span class="date">{{ item.created_at }}</span>
+        {% if item.photo %}
+        <img class="photo" src="{{ item.photo.url }}" alt="{{ item.user }}">
+        {% else %}
+        <p class="no-photo"></p>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+
+<!--form-->
+
+
+<!-- Django Form -->
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn">Yuborish</button>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+# Python bytecode and cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables and settings
+.env
+*.env
+
+# Logs
+*.log
+logs/
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+
+.idea/
+

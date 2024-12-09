@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+.sticky-bar {
+    position: sticky; /* Make it sticky */
+    top: 0; /* Position it at the top */
+    background-color: rgb(41, 43, 42);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space out children */
+    align-items: center; /* Center vertically */
+    padding: 10px 20px; /* Padding for spacing */
+    z-index: 1000; /* Ensure it's on top */
+}
+
+.profile-info {
+    display: flex; /* Flexbox for profile info */
+    align-items: center; /* Center vertically */
+}
+
+.profile-photo {
+    width: 50px; /* Set a fixed size for the profile photo */
+    height: 50px; /* Maintain aspect ratio */
+    border-radius: 50%; /* Circular image */
+    margin-right: 10px; /* Spacing between image and name */
+    object-fit: cover;
+}
+
+.profile-name {
+    font-size: 1.2em; /* Larger font size for name */
+    color: rgb(255, 125, 3);
+}
+
+.balance-info {
+    display: flex; /* Flexbox for balance info */
+    align-items: center; /* Center vertically */
+    font-size: 1.1em; /* Font size for balance */
+    color: rgb(255, 125, 3);
+}
+
+.balance {
+    margin-right: 5px; /* Spacing between balance and coin */
+}
+
+.coin-icon {
+    width: 35px; /* Set a fixed size for the coin icon */
+    height: 35px; /* Maintain aspect ratio */
+}
+
+</style>
+<div class="sticky-bar">
+    <div class="profile-info">
+        {% if profile.photo %}
+        <img src="{{ profile.photo.url }}" alt="{{ user.username }}" class="profile-photo">
+        <h2 class="profile-name">{{ user.first_name }}</h2>
+        {% else %}
+        <img src="{% static 'profile/user.png' %}" alt="Default Profile" class="profile-photo">
+        {% endif %}
+    </div>
+    <div class="balance-info">
+        <img src="{% static 'navigations/plus.png' %}" alt="Plus" class="coin-icon">
+        <span class="balance">{{ profile.balance }}</span>
+        <img src="{% static 'profile/coin.png' %}" alt="Coin" class="coin-icon">
+    </div>
+</div>
+<style>
+    .container {
+    max-width: 600px; /* Center the form in the middle of the page */
+    margin: auto; /* Center the container */
+}
+
+h1 {
+    color: #007bff; /* Blue color for the heading */
+}
+
+.btn-primary {
+    background-color: #28a745; /* Green background for the create button */
+    border-color: #28a745; /* Green border for the create button */
+}
+
+.btn-primary:hover {
+    background-color: #218838; /* Darker green on hover */
+    border-color: #1e7e34; /* Darker border on hover */
+}
+
+.btn-secondary {
+    color: #fff; /* White text for the back button */
+    background-color: #6c757d; /* Gray background for the back button */
+    border-color: #6c757d; /* Gray border for the back button */
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268; /* Darker gray on hover */
+    border-color: #545b62; /* Darker gray border on hover */
+}
+
+</style>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">E'lon Qo'shish</h1>
+    <form method="POST" class="bg-light p-4 border rounded" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.as_p }}
+            <a class="btn btn-primary btn-lg btn-block" href="{% url 'payment' %}">1 E'lon - 3000 so'm </a>
+        </div>
+        <h5 style=" text-align: center; "><span style="color: red;">Eslatma!</span><br>
+            <span style="color: green;">Tanlovingiz uchun rahmat!😊</span>
+        </h5>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Joylash</button>
+    </form>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+{% endblock %}

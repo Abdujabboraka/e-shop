@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+
+
+
+{% block content %}
+<h2>Send a message</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <label for="receiver_id">Receiver:</label>
+    <input type="hidden" name="receiver_id" value="{{ receiver.id }}">
+
+
+    <button type="submit">Send Message</button>
+</form>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endblock content %}

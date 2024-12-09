@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    /* Global Styling */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Roboto', sans-serif; /* Use a modern sans-serif font */
+    }
+
+    /* Notification Container */
+    .notification-container {
+        max-width: 800px;
+        margin: 30px auto;
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        padding: 25px;
+        text-align: center;
+        font-family: 'Arial', sans-serif;
+        transition: box-shadow 0.3s ease;
+    }
+
+    /* Header for Notifications */
+    .notification-container h1 {
+        font-size: 28px;
+        color: #333;
+        margin-bottom: 25px;
+        font-weight: 700;
+    }
+
+    /* Notification Item */
+    .notification {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        margin-bottom: 15px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .notification:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Sender's Avatar */
+    .sender-photo {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Notification Details (Text Content) */
+    .notification-details {
+        flex-grow: 1;
+        text-align: left;
+    }
+
+    /* Sender Name Styling */
+    .message-sender {
+        font-size: 1.1rem;
+        color: #388E3C; /* Green for the sender's name */
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    /* Received Message Content */
+    .message-content {
+        font-size: 1rem;
+        color: #333;  /* Dark text for the message */
+        line-height: 1.6;
+        background-color: #f4f4f4; /* Light background color for received message */
+        padding: 12px 18px;
+        border-radius: 8px;
+        margin-top: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        word-wrap: break-word; /* Ensure long messages break to the next line */
+    }
+
+    /* Styling the message text on hover (optional) */
+    .message-content:hover {
+        background-color: #eaeaea; /* Slightly darker on hover */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Message Timestamp */
+    .message-time {
+        font-size: 0.9rem;
+        color: #888;
+        margin-top: 8px;
+    }
+
+    /* Reply Button */
+    .notification a button {
+        background-color: #388E3C;
+        color: #fff;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: background-color 0.3s ease;
+        text-decoration: none;
+    }
+
+    .notification a button:hover {
+        background-color: #2c6e1f;
+    }
+
+    /* No Notifications Text */
+    .no-notifications {
+        font-size: 1rem;
+        color: #777;
+        padding: 20px 0;
+        font-weight: 500;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .notification-container {
+            padding: 15px;
+        }
+
+        .notification {
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        .sender-photo {
+            margin-right: 0;
+            margin-bottom: 12px;
+        }
+
+        .message-sender {
+            font-size: 1rem;
+        }
+
+        .message-content {
+            font-size: 0.95rem;
+        }
+
+        .notification a button {
+            width: 100%;
+            margin-top: 10px;
+        }
+    }
+</style>
+
+<div class="notification-container">
+    <h1>Xabarlar !</h1>
+
+    {% if notifications %}
+    {% for notification in notifications %}
+    <div class="notification">
+        <!-- Sender's Photo -->
+        {% if notification.sender_photo %}
+        <img src="{{ notification.sender_photo }}" alt="Sender Photo" class="sender-photo">
+        {% else %}
+        <img src="{% static 'profile/user.png' %}" alt="Sender Photo" class="sender-photo">
+        {% endif %}
+
+        <div class="notification-details">
+            <!-- Sender Name -->
+            <p class="message-sender">{{ notification.message.creator }}</p>
+
+            <!-- Message Content -->
+            <p class="message-content">{{ notification.message.content }}</p>
+
+            <!-- Timestamp -->
+            <span class="message-time">{{ notification.message.timestamp }}</span>
+
+            <!-- Reply Button -->
+            <a href="{% url 'user_profile' notification.message.sender.username %}">
+                <button>Reply</button>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p class="no-notifications">No new notifications.</p>
+    {% endif %}
+</div>
+
+{% endblock content %}

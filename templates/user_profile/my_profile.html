@@ -1,0 +1,376 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style>/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Container */
+.box-pro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+/* User Profile Section */
+.user-profile {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+    margin-bottom: 20px;
+}
+
+.profile-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid #007bff;
+    margin-bottom: 15px;
+}
+
+.username {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #333;
+}
+
+.profile-details h1 {
+    font-size: 1.5em;
+    color: #555;
+    margin: 10px 0;
+}
+
+.profile-details p {
+    font-size: 1.1em;
+    color: #777;
+}
+
+.btn-edit, .btn-save {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-edit:hover, .btn-save:hover {
+    background-color: #0056b3;
+}
+
+/* Form */
+.form-container {
+    margin-top: 20px;
+    display: none;
+}
+
+.form-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-container form .btn-save {
+    margin-top: 20px;
+}
+
+/* Community Section */
+.community-section {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.community-link {
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 10px 15px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    justify-content: center;
+}
+
+.community-link:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.community-logo {
+
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.community-link span {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .box-pro {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .user-profile, .community-section {
+        max-width: 100%;
+    }
+
+    .community-link {
+        justify-content: flex-start;
+    }
+}
+</style>
+
+<style>
+    .sticky-bar {
+        position: sticky; /* Make it sticky */
+        top: 0; /* Position it at the top */
+        background-color: rgb(41, 43, 42);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        display: flex; /* Use flexbox for layout */
+        justify-content: space-between; /* Space out children */
+        align-items: center; /* Center vertically */
+        padding: 10px 20px; /* Padding for spacing */
+        z-index: 1000; /* Ensure it's on top */
+    }
+
+    .profile-info {
+        display: flex; /* Flexbox for profile info */
+        align-items: center; /* Center vertically */
+    }
+
+    .profile-photo {
+        width: 50px; /* Set a fixed size for the profile photo */
+        height: 50px; /* Maintain aspect ratio */
+        border-radius: 50%; /* Circular image */
+        margin-right: 10px; /* Spacing between image and name */
+        object-fit: cover;
+    }
+
+    .profile-name {
+        font-size: 1.2em; /* Larger font size for name */
+        color: rgb(255, 125, 3);
+    }
+
+    .balance-info {
+        display: flex; /* Flexbox for balance info */
+        align-items: center; /* Center vertically */
+        font-size: 1.1em; /* Font size for balance */
+        color: rgb(255, 125, 3);
+    }
+
+    .balance {
+        margin-right: 5px; /* Spacing between balance and coin */
+    }
+
+    .coin-icon {
+        width: 35px; /* Set a fixed size for the coin icon */
+        height: 35px; /* Maintain aspect ratio */
+    }
+
+</style>
+
+
+<div class="sticky-bar">
+    <div class="profile-info">
+        {% if profile.photo %}
+        <img src="{{ profile.photo.url }}" alt="{{ user.username }}" class="profile-photo">
+
+        {% else %}
+        <img src="{% static 'profile/user.png' %}" alt="Default Profile" class="profile-photo">
+        {% endif %}
+        {% if user.first_name %}
+        <h2 class="profile-name">{{ user.first_name }}</h2>
+        {% else %}
+        <h2 class="profile-name">{{ user.username }}</h2>
+        {% endif %}
+    </div>
+    <div class="balance-info">
+        <a href="{% url 'payment' %}"><img src="{% static 'navigations/plus.png' %}" alt="Plus" class="coin-icon"></a>
+        <span class="balance">{{ profile.balance }}</span>
+        <img src="{% static 'profile/coin.png' %}" alt="Coin" class="coin-icon">
+    </div>
+</div>
+
+
+<div class="box-pro">
+    <!-- Profile Section -->
+    <div class="user-profile">
+        <div class="profile-header">
+            {% if profile.photo %}
+                <img class="profile-photo" src="{{ profile.photo.url }}" alt="{{ user.username }}">
+            {% else %}
+                <img class="profile-photo" src="{% static 'profile/user.png' %}">
+            {% endif %}
+            <h2 class="username">{{ user.username }}</h2>
+        </div>
+
+        <div class="profile-details">
+            <h1 class="first-name">{{ user.first_name }}</h1>
+            <p class="email">{{ profile.email }}</p>
+        </div>
+
+        <button id="edit-button" class="btn-edit">Profilni Tahrirlash</button>
+
+        <div id="profile-form" class="form-container" style="display: none;">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                {{ profile_form.as_p }}
+                <button type="submit" class="btn-save">Saqlash</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Community Section -->
+    <div class="community-section">
+        <a class="community-link" href="{% url 'community' %}">
+            <img class="community-logo" src="{% static 'community/community.png' %}" alt="Community">
+            <span>Jamoa fikri >>></span>
+        </a>
+        <a class="community-link" href="{% url 'supporturl' %}">
+            <img class="community-logo" src="{% static 'community/support.png' %}" alt="Support">
+            <span>Yordam >>></span>
+        </a>
+    </div>
+</div>
+<script>
+    document.getElementById('edit-button').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default link behavior
+        var form = document.getElementById('profile-form');
+        if (form.style.display === 'none') {
+            form.style.display = 'block'; // Show the form
+        } else {
+            form.style.display = 'none';  // Hide the form
+        }
+    });
+</script>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="home-ads">
+    <style>
+        .home-ads {
+    display: flex;
+    justify-content: space-between; /* Equal spacing between ads */
+    flex-wrap: wrap; /* Allow ads to wrap to the next line on smaller screens */
+    margin: 20px 0; /* Spacing above and below the ads section */
+}
+
+.ads-box {
+    flex: 1 1 30%; /* Allow the ads to take up to 30% of the width */
+    padding: 5px; /* Padding inside each ad box */
+    margin: 10px; /* Margin between ad boxes */
+    text-align: center; /* Centering text */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+    background-color: #fff; /* Background color for ad boxes */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+}
+
+.ads-box:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.ads-box img {
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 8px; /* Rounded corners for images */
+}
+
+.ads-box h2 {
+    font-size: 1.25rem; /* Size for ad title */
+    margin: 10px 0; /* Margin above and below the title */
+}
+
+.ads-box h1 {
+    font-size: 1.5rem; /* Size for ad price */
+    color: #28a745; /* Green color for price to make it stand out */
+    margin: 5px 0; /* Margin above and below the price */
+}
+
+/* Responsive design for small screens */
+@media (max-width: 768px) {
+.ads-box img {
+    height: 150px;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 8px; /* Rounded corners for images */
+    }
+
+    </style>
+    {% for ad in announcements %}
+    <div class="ads-box">
+        <a href="{% url 'announcement_detail' ad.id %}">
+            {% if ad.image %}
+            <img src="{{ ad.image.url }}" alt="{{ ad.title }}">
+            {% else %}
+            <p>No foto!</p>
+            {% endif %}
+            <h2>{{ ad.title }}</h2>
+            <h1>{{ ad.price }}</h1>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endblock content %}

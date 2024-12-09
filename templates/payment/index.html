@@ -1,0 +1,274 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .sticky-bar {
+        position: sticky; /* Make it sticky */
+        top: 0; /* Position it at the top */
+        background-color: rgb(41, 43, 42);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        display: flex; /* Use flexbox for layout */
+        justify-content: space-between; /* Space out children */
+        align-items: center; /* Center vertically */
+        padding: 10px 20px; /* Padding for spacing */
+        z-index: 1000; /* Ensure it's on top */
+    }
+
+    .profile-info {
+        display: flex; /* Flexbox for profile info */
+        align-items: center; /* Center vertically */
+    }
+
+    .profile-photo {
+        width: 50px; /* Set a fixed size for the profile photo */
+        height: 50px; /* Maintain aspect ratio */
+        border-radius: 50%; /* Circular image */
+        margin-right: 10px; /* Spacing between image and name */
+        object-fit: cover;
+    }
+
+    .profile-name {
+        font-size: 1.2em; /* Larger font size for name */
+        color: rgb(255, 125, 3);
+    }
+
+    .balance-info {
+        display: flex; /* Flexbox for balance info */
+        align-items: center; /* Center vertically */
+        font-size: 1.1em; /* Font size for balance */
+        color: rgb(255, 125, 3);
+    }
+
+    .balance {
+        margin-right: 5px; /* Spacing between balance and coin */
+    }
+
+    .coin-icon {
+        width: 35px; /* Set a fixed size for the coin icon */
+        height: 35px; /* Maintain aspect ratio */
+    }
+
+</style>
+<div class="sticky-bar">
+    <div class="profile-info">
+
+        {% if profile.photo %}
+        <img src="{{ profile.photo.url }}" alt="{{ user.username }}" class="profile-photo">
+
+        {% else %}
+        <img src="{% static 'profile/user.png' %}" alt="Default Profile" class="profile-photo">
+        {% endif %}
+        {% if user.first_name %}
+        <h2 class="profile-name">{{ user.first_name }}</h2>
+        {% else %}
+        <h2 class="profile-name">{{ user.username }}</h2>
+        {% endif %}
+    </div>
+    <div class="balance-info">
+        <a href="{% url 'payment' %}"><img src="{% static 'navigations/plus.png' %}" alt="Plus" class="coin-icon"></a>
+        <span class="balance">{{ profile.balance }}</span>
+        <img src="{% static 'profile/coin.png' %}" alt="Coin" class="coin-icon">
+    </div>
+</div>
+<style>
+    /* General Reset */
+   /* Container Styling */
+   .container-pro {
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       justify-content: center;
+       height: 100vh;
+       padding: 20px;
+   }
+
+   /* Card Styling */
+   .card {
+       width: 100%;
+       max-width: 400px;
+       background-color: #f4f6f8;
+       border-radius: 8px;
+       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+       padding: 20px;
+       margin: 20px 0;
+       text-align: center;
+   }
+
+   /* Title Styling */
+   .title {
+       font-size: 1.5em;
+       font-weight: bold;
+       color: #333;
+       margin-bottom: 15px;
+   }
+
+   /* Form Button Styling */
+   .form-button {
+       font-size: 1.1em;
+       padding: 12px 20px;
+       margin: 10px 0;
+       background-color: #4CAF50; /* Green color */
+       color: #fff;
+       border: none;
+       border-radius: 5px;
+       cursor: pointer;
+       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+       transition: background-color 0.3s ease, transform 0.2s ease;
+   }
+
+   .form-button:hover {
+       background-color: #45a049; /* Darker green */
+       transform: scale(1.05);
+   }
+
+   .form-button:active {
+       background-color: #388e3c;
+   }
+
+   /* Image Styling inside Form */
+   form img {
+       width: 36px;
+       height: 36px;
+       border-radius: 50%;
+       object-fit: cover;
+   }
+
+   /* Payment Information Styling */
+   .payment-info {
+       font-size: 1.2em;
+       color: #555;
+       margin-top: 20px;
+       padding-top: 10px;
+       border-top: 1px solid #ddd;
+   }
+
+   .card-number {
+       font-weight: bold;
+       color: #333;
+   }
+
+   input {
+       padding: 8px;
+       margin-right: 10px;
+       font-size: 16px;
+       border: 1px solid #ccc;
+       border-radius: 5px;
+       width: 70%;
+       text-align: center;
+   }
+
+   #copyButton {
+       background-color: #008CBA;
+       color: white;
+       padding: 8px 12px;
+       border: none;
+       cursor: pointer;
+       border-radius: 5px;
+   }
+
+   #copyButton:hover {
+       background-color: #007bb5;
+   }
+
+   #feedback {
+       display: none;
+       margin-top: 10px;
+       font-size: 16px;
+       color: green;
+   }
+
+   /* Hidden class */
+   .hidden {
+       display: none;
+   }
+
+</style>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container-pro">
+    <div class="card">
+        <div class="title">Tanlovlar</div>
+
+        <form>
+            <img width="300" src="{% static 'coins/uzcard.jpg' %}">
+            <p>
+                <img src="{% static 'coins/coin-1.jpg' %}" alt="300 CP coin">
+                300 CP - 5000 so'm
+                <button type="button" class="form-button">sotib olish</button>
+            </p>
+            <p>
+                <img src="{% static 'coins/coin-2.jpg' %}" alt="600 CP coin">
+                600 CP - 8000 so'm
+                <button type="button" class="form-button">sotib olish</button>
+            </p>
+            <p>
+                <img src="{% static 'coins/coin-3.jpg' %}" alt="1500 CP coin">
+                1500 CP - 20000 so'm
+                <button type="button" class="form-button">sotib olish</button>
+            </p>
+            <p>
+                <img src="{% static 'coins/coin-4.jpg' %}" alt="3000 CP coin">
+                3000 CP - 25000 so'm
+                <button type="button" class="form-button">sotib olish</button>
+            </p>
+            <p>
+                <img src="{% static 'coins/coin-5.jpg' %}" alt="10000 CP coin">
+                10000 CP - 50000 so'm
+                <button type="button" class="form-button">sotib olish</button>
+            </p>
+        </form>
+
+        <!-- Card Number Copy Section -->
+        <div class="payment-info">
+            <h3>sotib olish uchun karta raqamiga o'tkazma qiling</h3>
+            <label for="myInput">Karta Raqami:</label>
+            <input type="text" value="8600 3329 8646 9280" id="myInput" readonly>
+            <button onclick="copyToClipboard()" id="copyButton">Nusxa Olish</button>
+            <span id="feedback" class="hidden">Nusxalandi!</span>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+<script>function copyToClipboard() {
+    var copyText = document.getElementById("myInput");
+
+    // Select the text field
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // For mobile devices
+
+    // Copy the text inside the input
+    document.execCommand("copy");
+
+    // Show feedback message
+    var feedback = document.getElementById("feedback");
+    feedback.style.display = "inline";
+
+    // Hide the feedback message after 2 seconds
+    setTimeout(function() {
+        feedback.style.display = "none";
+    }, 2000);
+}
+</script>
+{% endblock content %}

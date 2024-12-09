@@ -1,0 +1,378 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    h1 {
+        color: #343a40;
+    }
+
+    .list-group-item {
+        border: 1px solid #dee2e6;
+        transition: transform 0.2s;
+    }
+
+    .list-group-item:hover {
+        transform: scale(1.02);
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-outline-success {
+        border-color: #28a745;
+        color: #28a745;
+    }
+
+    .btn-outline-success:hover {
+        background-color: #28a745;
+        color: white;
+    }
+
+     .categories-carousel {
+        overflow-x: auto;
+        width: 100%;
+        padding: 10px 0;
+        scroll-behavior: smooth;  /* Smooth scroll when manually scrolling */
+    }
+
+    .categories-container {
+        display: flex;
+        gap: 15px;
+        animation: scroll-left 20s linear infinite;
+        will-change: transform;  /* Improve performance by hinting at what will change */
+    }
+
+    .category-item {
+        flex: 0 0 auto;
+        width: 150px;
+        text-align: center;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .category-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .category-item img {
+        width: 100%;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    .category-item h2 {
+        font-size: 1rem;
+        color: #343a40;
+        margin: 0;
+        font-weight: bold;
+        white-space: normal;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    @media (max-width: 768px) {
+        .category-item {
+            width: 120px;
+        }
+
+        .category-item img {
+            height: 80px;
+        }
+
+        .category-item h2 {
+            font-size: 0.9rem;
+        }
+    }
+
+    /* Infinite scroll animation */
+    @keyframes scroll-left {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-100%);
+        }
+    }
+    .sections {
+        background-color:  #0044cc;
+        padding: 1px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        text-align: center;
+        margin: 5px auto;
+        max-width: 800px;
+    }
+
+    .sections h2 {
+        font-family: 'Bree Serif', serif;
+        font-size: 2em;
+        color: white;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+    }
+
+    .home-ads {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 30px 0;
+    }
+
+    .ads-box {
+        flex: 1 1 22%;
+        padding: 5px;
+        margin: 5px;
+        text-align: center;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #fdfbfb, #ebedee);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    }
+
+    .ads-box:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        background: linear-gradient(135deg, #ebedee, #fdfbfb);
+    }
+
+    .ads-box img {
+        height: 150px;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 5px;
+    }
+
+    .ads-box h2 {
+        font-size: 1rem;
+        color: #333;
+        margin: 10px 0;
+    }
+
+    .ads-box h1 {
+        font-size: 1.2rem;
+        color: #28a745;
+        margin: 8px 0;
+        font-weight: bold;
+    }
+
+    .category_name-link {
+        display: inline-block;
+        margin: 3px 0;
+        background: linear-gradient(135deg, #FFD700, #FFA500);
+        border-radius: 8px;
+        padding: 5px 10px;
+        color: black;
+        text-decoration: none;
+        font-size: 1rem;
+        float: left;
+    }
+
+    .category_name-link:hover {
+        background: linear-gradient(135deg, #FFA500, #FFD700);
+        color: white;
+        text-decoration: underline;
+    }
+
+    .pagination {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 20px;
+    }
+
+    .pagination-link {
+        display: inline-block;
+        padding: 8px 12px;
+        color: #fff;
+        background-color: #007bff;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+        font-weight: 500;
+        font-size: 14px;
+    }
+
+    .pagination-link:hover {
+        background-color: #0056b3;
+    }
+
+    .current-page {
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+        padding: 8px;
+    }
+
+    @media (max-width: 768px) {
+        .ads-box {
+            flex: 1 1 100%;
+        }
+
+        .ads-box img {
+            height: 300px;
+            border-radius: 8px;
+        }
+
+        .pagination-link {
+            padding: 6px 10px;
+            font-size: 12px;
+        }
+
+        .current-page {
+            font-size: 12px;
+        }
+    }
+
+</style>
+{% if  '/select_category/' not in request.path %}
+<div class="sections">
+    <h2>Bo'limlar</h2>
+</div>
+
+{% endif %}
+
+<div class="categories-carousel">
+    <div class="categories-container">
+        {% for category in categories %}
+        <div class="category-item">
+            <a class="category-link" href="{% url 'category' category.id %}">
+                {% if category.image %}
+                <img src="{{ category.image.url }}" alt="{{ category.name }}">
+                {% else %}
+                <p>No foto!</p>
+                {% endif %}
+                <h2>{{ category.name }}</h2>
+            </a>
+        </div>
+        {% endfor %}
+        <!-- Duplicate categories for continuous scrolling effect -->
+        {% for category in categories %}
+        <div class="category-item">
+            <a class="category-link" href="{% url 'category' category.id %}">
+                {% if category.image %}
+                <img src="{{ category.image.url }}" alt="{{ category.name }}">
+                {% else %}
+                <p>No foto!</p>
+                {% endif %}
+                <h2>{{ category.name }}</h2>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<hr>
+<div class="home-ads">
+<!--    SPONSOR AD   -->
+     <div class="ads-box">
+        <h4 class="category_name-link">Reklama</h4>
+        <h4>Chimyonda</h4>
+        <a href="{% url 'sponsor' %}">
+
+            <img src="{% static 'sponsor/image14.jpg' %}" alt="chimyon.patir">
+
+            <h2>Chimyon Patir</h2>
+        </a>
+    </div>
+<!--    SPONSOR AD    END  -->
+
+    {% for ad in announcements %}
+    <div class="ads-box">
+        <h4 class="category_name-link">{{ ad.category }}</h4>
+        <h4>{{ ad.address|truncatewords:1 }}da</h4>
+        <a href="{% url 'announcement_detail' ad.id %}">
+            {% if ad.image %}
+            <img src="{{ ad.image.url }}" alt="{{ ad.title }}">
+            {% else %}
+            <img src="{% static 'Website/logo.jpg' %}" alt="logo">
+            {% endif %}
+            <h2>{{ ad.title }}</h2>
+            <h1>{{ ad.price }}</h1>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="pagination">
+    {% if announcements.has_previous %}
+    <a href="?page=1" class="pagination-link">&laquo; Birinchi</a>
+    <a href="?page={{ announcements.previous_page_number }}" class="pagination-link">Avvalgi</a>
+    {% endif %}
+
+    <span class="current-page">
+        {{ announcements.paginator.num_pages }} ta dan {{ announcements.number }}- sahifa
+    </span>
+
+    {% if announcements.has_next %}
+    <a href="?page={{ announcements.next_page_number }}" class="pagination-link">Keyingi</a>
+    <a href="?page={{ announcements.paginator.num_pages }}" class="pagination-link">Oxirgi &raquo;</a>
+    {% endif %}
+</div>
+<script>
+       const carousel = document.querySelector('.categories-carousel');
+    let isMouseDown = false;
+    let startX;
+    let scrollLeft;
+
+    carousel.addEventListener('mousedown', (e) => {
+        isMouseDown = true;
+        startX = e.pageX - carousel.offsetLeft;
+        scrollLeft = carousel.scrollLeft;
+    });
+
+    carousel.addEventListener('mouseleave', () => {
+        isMouseDown = false;
+    });
+
+    carousel.addEventListener('mouseup', () => {
+        isMouseDown = false;
+    });
+
+    carousel.addEventListener('mousemove', (e) => {
+        if (!isMouseDown) return;
+        e.preventDefault();
+        const x = e.pageX - carousel.offsetLeft;
+        const walk = (x - startX) * 2; // Speed of scrolling
+        carousel.scrollLeft = scrollLeft - walk;
+    });
+</script>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}
